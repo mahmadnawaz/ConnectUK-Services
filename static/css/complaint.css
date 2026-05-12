@@ -1,0 +1,220 @@
+/* complaint.css - ConnectUK Services */
+
+.complaint-page-layer {
+    padding: 120px 0 60px 0;
+    background: #f0f4f8;
+    display: flex;
+    justify-content: center;
+}
+
+.complaint-card {
+    width: 95%;
+    max-width: 950px;
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.complaint-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.complaint-header h1 {
+    font-size: 32px;
+    color: #0b1444;
+    font-weight: 850;
+    margin-bottom: 8px;
+}
+
+.complaint-header p {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.header-underline {
+    width: 60px;
+    height: 4px;
+    background: #2d82ff;
+    margin: 15px auto;
+    border-radius: 10px;
+}
+
+.intro-box {
+    border-left: 5px solid #2d82ff;
+    padding: 20px 30px;
+    background: #f8fafc;
+    margin-bottom: 40px;
+    border-radius: 0 12px 12px 0;
+}
+
+.intro-box p {
+    margin-bottom: 10px;
+    color: #334155;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Steps Grid Styling */
+.steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.step-item {
+    display: flex;
+    gap: 20px;
+    padding: 25px;
+    border: 1px solid #e2e8f0;
+    border-radius: 15px;
+    background: #fff;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.step-item:hover {
+    transform: translateY(-5px);
+    border-color: #2d82ff;
+}
+
+.step-icon {
+    font-size: 24px;
+    color: #2d82ff;
+    background: #ebf4ff;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    font-size: 1.05rem;
+    color: #0b1444;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.step-content p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.highlight-step {
+    background: #0b1444;
+    border: none;
+}
+
+.highlight-step h3, .highlight-step p {
+    color: #ffffff;
+}
+
+.highlight-step .step-icon {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+.visit-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-weight: 600;
+    color: #ffb703 !important;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Form Styling */
+.complaint-form-section {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px solid #f1f5f9;
+}
+
+.form-title {
+    margin-bottom: 30px;
+}
+
+.form-title h2 {
+    color: #0b1444;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.form-title p {
+    color: #64748b;
+}
+
+.modern-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #334155;
+    font-size: 0.9rem;
+}
+
+.modern-form input, .modern-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.modern-form input:focus, .modern-form textarea:focus {
+    border-color: #2d82ff;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(45, 130, 255, 0.1);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: #2d82ff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-submit:hover {
+    background: #1e3a8a;
+    box-shadow: 0 5px 15px rgba(45, 130, 255, 0.3);
+}
+
+/* Alerts */
+.alert-box {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+.alert-box.success { background: #dcfce7; color: #166534; }
+.alert-box.error { background: #fee2e2; color: #991b1b; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .steps-grid, .modern-form .form-row {
+        grid-template-columns: 1fr;
+    }
+    .complaint-card {
+        padding: 30px 20px;
+    }
+}

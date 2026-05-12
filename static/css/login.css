@@ -1,0 +1,145 @@
+/* Background and Centering */
+.login-container {
+    background-color: #f8fafc;
+    min-height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Card Styling */
+.login-card {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+.login-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-header h1 {
+    color: rgb(102, 99, 155);
+    font-size: 26px;
+    margin-bottom: 8px;
+}
+
+.login-header p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* Error Messages */
+.alert {
+    background-color: #fee2e2;
+    color: #dc2626;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.form-group input:focus {
+    border-color: rgb(102, 99, 155);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 99, 155, 0.1);
+}
+
+/* SHOW PASSWORD STYLING - NAYA IZAFA */
+.show-password-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    margin-top: -10px;
+}
+
+.show-password-wrapper input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.show-password-wrapper label {
+    font-size: 13px;
+    color: #64748b;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Login Button */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: rgb(102, 99, 155);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #4f4a85;
+}
+
+/* Options and Footer */
+.form-options {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.forgot-link {
+    font-size: 13px;
+    color: #64748b;
+    text-decoration: none;
+}
+
+.login-footer {
+    margin-top: 30px;
+    text-align: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 20px;
+    font-size: 14px;
+}
+
+.login-footer a {
+    color: rgb(102, 99, 155);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}

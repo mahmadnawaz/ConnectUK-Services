@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="contact-wrapper">
+    <div class="contact-container">
+        
+        <div class="contact-info-panel">
+            <h2>Contact Information</h2>
+            <p>We are here to help! Send us a message and we will respond shortly.</p>
+            
+            <div class="info-block">
+                <span class="icon">📍</span>
+                <div>
+                    <strong>Our Office</strong>
+                    <p>Barking, London, United Kingdom</p>
+                </div>
+            </div>
+
+            <div class="info-block">
+                <span class="icon">📧</span>
+                <div>
+                    <strong>Email Us</strong>
+                    <p>info@connectukservices.com</p>
+                </div>
+            </div>
+
+            <div class="info-block">
+                <span class="icon">📞</span>
+                <div>
+                    <strong>Call Us</strong>
+                    <p>+44 123 456 7890</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form-panel">
+            <h3>Send a Message</h3>
+
+            <!-- Messages yahan base.html se handle ho rahe hain, lekin agar aapne yahan rakha hai toh bhi theek hai -->
+
+            <form method="POST"> 
+                {% csrf_token %} 
+                <div class="input-box">
+                    <label>Full Name</label>
+                    <input type="text" name="name" placeholder="e.g. Full Name" required>
+                </div>
+
+                <div class="input-box">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="name@example.com" required>
+                </div>
+
+                <div class="input-box">
+                    <label>How can we help?</label>
+                    <textarea name="message" placeholder="Describe your requirements..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">Submit Message</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/complaint.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="complaint-page-layer">
+    <div class="complaint-card">
+        
+        <div class="complaint-header">
+            <h1>Our Complaints Procedure</h1>
+            <p>Clear, Fair, and Fast Resolution</p>
+            <div class="header-underline"></div>
+        </div>
+
+        <div class="intro-box">
+            <p>At <strong>ConnectUk Services</strong>, we are committed to delivering the <strong>highest level of customer service</strong> throughout your contract.</p>
+            <p>If you're <strong>unhappy with any part of our service</strong>, we want to put it right as soon as possible.</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-item">
+                <div class="step-icon"><i class="fas fa-paper-plane"></i></div>
+                <div class="step-content">
+                    <h3>Step 1 – Submitting Complaint</h3>
+                    <p>Email: <a href="mailto:info@connectukservices.com">info@connectukservices.com</a></p>
+                    <small>Include a detailed description and preferred resolution.</small>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-icon"><i class="fas fa-clock"></i></div>
+                <div class="step-content">
+                    <h3>Step 2 – Acknowledgement</h3>
+                    <p>You will receive acknowledgment within <strong>five business days</strong>.</p>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-icon"><i class="fas fa-reply"></i></div>
+                <div class="step-content">
+                    <h3>Step 3 – Our Response</h3>
+                    <p>Final response or a holding response explaining any delay.</p>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-icon"><i class="fas fa-search-plus"></i></div>
+                <div class="step-content">
+                    <h3>Step 4 – Further Review</h3>
+                    <p>If not satisfied, we are happy to reconsider with new information.</p>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-icon"><i class="fas fa-calendar-check"></i></div>
+                <div class="step-content">
+                    <h3>Step 5 – Final Deadline</h3>
+                    <p>A final response will be issued within <strong>8 weeks</strong> total.</p>
+                </div>
+            </div>
+
+            <div class="step-item highlight-step">
+                <div class="step-icon"><i class="fas fa-balance-scale"></i></div>
+                <div class="step-content">
+                    <h3>Step 6 – Independent Resolution</h3>
+                    <p>Escalate to the <strong>Dispute Resolution Ombudsman</strong> if unresolved.</p>
+                    <a href="https://www.disputeresolutionombudsman.org/dispute" target="_blank" class="visit-link">Visit Official Website <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="complaint-form-section">
+            <div class="form-title">
+                <h2><i class="fas fa-envelope"></i> Send us a Message</h2>
+                <p>Fill out the form below and our team will get back to you.</p>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert-box {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- action line add kar dein -->
+            <form method="POST" action="{% url 'complaints' %}" class="modern-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" name="full_name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Mobile Number</label>
+                        <input type="text" name="mobile" placeholder="e.g. +44..." required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="email@example.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Complaint Type</label>
+                        <input type="text" name="subject" placeholder="e.g. Billing, Service issue" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Detailed Description</label>
+                    <textarea name="message" rows="5" placeholder="Please describe your issue in detail..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Submit Complaint</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

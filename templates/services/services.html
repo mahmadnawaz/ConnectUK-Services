@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <section class="services-hero">
+        <div class="container">
+            <h1>Our Professional Services</h1>
+            <p>Providing smart payment solutions and utility management across the UK.</p>
+        </div>
+    </section>
+
+    <section class="services-section">
+        <div class="container">
+            <div class="services-grid">
+                
+                <article class="service-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/cardmachine.jpeg' %}" alt="Card Payment Machine" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3>Card Payment Machine</h3>
+                        <p>Affordable card machines with low transaction fees and full 24/7 technical support.</p>
+                        <a href="{% url 'get_quote' %}?type=Card Payment Machine" class="service-btn">Apply Now</a>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/tillsystem.jpeg' %}" alt="POS & Till Systems" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3>POS & Till Systems</h3>
+                        <p>Smart till systems to manage your sales, stock, and customers effortlessly.</p>
+                        <a href="{% url 'get_quote' %}?type=POS & Till Systems" class="service-btn">Apply Now</a>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/taptopay.jpg' %}" alt="Mobile Tap to Pay" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3>Mobile Tap to Pay</h3>
+                        <p>Secure and portable payment solutions designed for businesses on the move.</p>
+                        <a href="{% url 'get_quote' %}?type=Mobile Tap to Pay" class="service-btn">Apply Now</a>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/electric.jpeg' %}" alt="Business Electricity" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3>Business Electricity</h3>
+                        <p>Compare and switch to low-cost electricity plans from trusted UK providers.</p>
+                        <a href="{% url 'get_quote' %}?type=Business Electricity" class="service-btn">Get Quote</a>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/gas.jpeg' %}" alt="Business Gas" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3>Business Gas</h3>
+                        <p>Expert gas tariff comparison to ensure your business gets the best possible rates.</p>
+                        <a href="{% url 'get_quote' %}?type=Business Gas" class="service-btn">Get Quote</a>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/water.jpeg' %}" alt="Business Water" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3>Business Water</h3>
+                        <p>Professional water management to help your business reduce monthly utility costs.</p>
+                        <a href="{% url 'get_quote' %}?type=Business Water" class="service-btn">Get Quote</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-banner">
+        <div class="container cta-flex">
+            <div class="cta-text">
+                <h2>ConnectUK Services – Smart Solutions for Your Business</h2>
+                <p>We empower you with efficient, transparent, and accessible payment and utility services—all in one place.</p>
+                <a href="{% url 'get_quote' %}" class="cta-button-black">Get Your Free Quote</a>
+            </div>
+            <div class="cta-img-box">
+                <img src="{% static 'images/homepage.png' %}" alt="Our Smart Solutions" loading="lazy">
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

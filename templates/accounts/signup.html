@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1>Join ConnectUK Services</h1>
+            <p>Create an account to manage your Business</p>
+        </div>
+
+        <form method="POST" class="auth-form">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Choose a unique username" required>
+            </div>
+
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="e.g. name@company.com" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="pass1" id="pass1" placeholder="Enter strong password" required>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" name="pass2" id="pass2" placeholder="Repeat password" required>
+            </div>
+
+            <div class="show-password-wrapper">
+                <input type="checkbox" id="show-signup-pass">
+                <label for="show-signup-pass">Show Password</label>
+            </div>
+
+            <button type="submit" class="primary-btn">Create Account</button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('show-signup-pass').onclick = function() {
+        var p1 = document.getElementById('pass1');
+        var p2 = document.getElementById('pass2');
+        var type = this.checked ? 'text' : 'password';
+        p1.type = type;
+        p2.type = type;
+    };
+</script>
+{% endblock %}

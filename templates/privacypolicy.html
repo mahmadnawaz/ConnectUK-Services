@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<!-- File name check karlein ke static/css/ mein kya naam rakha hai -->
+<link rel="stylesheet" href="{% static 'css/privacypolicy.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="policy-base-layer">
+    <div class="policy-card">
+        <div class="policy-main-title">
+            <h1>Privacy Policy</h1>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="policy-body">
+            <p class="intro">
+                This Privacy Policy explains how <strong>ConnectUk Services</strong> collects, uses, and protects your information. 
+                We ensure that your data is handled with the highest level of security in compliance with UK regulations.
+            </p>
+
+            <div class="section-block">
+                <h2><span>01</span> Interpretation & Definitions</h2>
+                <div class="definition-box">
+                    <ul>
+                        <li><strong>Company:</strong> ConnectUk Services.</li>
+                        <li><strong>Website:</strong> <a href="{% url 'home' %}">www.connectukservices.com</a></li>
+                        <li><strong>Personal Data:</strong> Any information that identifies you directly or indirectly.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2><span>02</span> Information We Collect</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-id-card"></i>
+                        <h4>Personal Details</h4>
+                        <p>Name, Email, Phone Number, Business Details.</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>Usage Data</h4>
+                        <p>IP Address, Browser Type, and Device Info.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2><span>03</span> Data Security</h2>
+                <p>
+                    We implement <strong>advanced hashing</strong> (PBKDF2/SHA256) and SSL encryption 
+                    to ensure your personal data is protected against unauthorized access.
+                </p>
+            </div>
+
+            <div class="footer-contact">
+                <h3>Contact Our Privacy Team</h3>
+                <p>For any queries, reach out to us at:</p>
+                <a href="mailto:info@connectukservices.com">info@connectukservices.com</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

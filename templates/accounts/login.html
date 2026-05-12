@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h1>Login to ConnectUK Services</h1>
+            <p>Enter your details to access your dashboard</p>
+        </div>
+
+        <form method="POST" class="login-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <!-- Name ko 'email' kar diya hai taake views se match kare -->
+                <input type="email" name="email" placeholder="Enter your registered email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" id="login-pass" placeholder="Enter your password" required>
+            </div>
+
+            <div class="show-password-wrapper">
+                <input type="checkbox" id="show-login-pass">
+                <label for="show-login-pass">Show Password</label>
+            </div>
+
+            <button type="submit" class="login-btn">Log In</button>
+
+            <div class="form-options">
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+        </form>
+
+        <div class="login-footer">
+            <p>Don't have an account? <a href="{% url 'signup' %}">Register now</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('show-login-pass').onclick = function() {
+        var passwordField = document.getElementById('login-pass');
+        passwordField.type = this.checked ? 'text' : 'password';
+    };
+</script>
+{% endblock %}

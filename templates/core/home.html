@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <!-- Hero Section -->
+    <section class="hp-hero">
+        <div class="hp-container hp-hero-flex">
+            <div class="hp-hero-content">
+                <span class="hp-badge-modern">UK's Trusted Utility Hub</span>
+                <h1>Smart Solutions for <br><span class="text-gradient">Modern Businesses</span></h1>
+                <p>Empowering your growth with seamless card payments and cost-effective utility management. All your business essentials, managed in one place.</p>
+                <div class="hero-actions">
+                    <a href="{% url 'get_quote' %}" class="hp-btn-primary">Get Your Quotes</a>
+                </div>
+            </div>
+
+            <div class="hp-image-stack">
+                <img src="{% static 'images/cardmachine.jpg' %}" class="hp-stagger-img" alt="Card Machine">
+                <img src="{% static 'images/electric.jpeg' %}" class="hp-stagger-img" alt="Electricity">
+                <img src="{% static 'images/gas.jpeg' %}" class="hp-stagger-img" alt="Gas">
+                <img src="{% static 'images/water.jpeg' %}" class="hp-stagger-img" alt="Water">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="hp-services">
+        <div class="hp-container">
+            <h2 class="hp-section-title">Our Capabilities</h2>
+            <div class="hp-services-grid">
+                <article class="hp-service-card">
+                    <div class="card-img-fix">
+                        <img src="{% static 'images/cardmachine.jpeg' %}" alt="Card Machine" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <h3>Card Machines</h3>
+                        <p>Secure terminals with lowest fees.</p>
+                        <a href="{% url 'services' %}" class="card-link">Learn More</a>
+                    </div>
+                </article>
+
+                <article class="hp-service-card">
+                    <div class="card-img-fix">
+                        <img src="{% static 'images/Utilities.jpg' %}" alt="Utility Management" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <h3>Utility Management</h3>
+                        <p>Smart savings on Gas, Electric, Water.</p>
+                        <a href="{% url 'services' %}" class="card-link">Learn More</a>
+                    </div>
+                </article>
+
+                <article class="hp-service-card">
+                    <div class="card-img-fix">
+                        <img src="{% static 'images/tillsystem.jpeg' %}" alt="POS Till Systems" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <h3>Till Systems</h3>
+                        <p>Complete sales and stock management.</p>
+                        <a href="{% url 'services' %}" class="card-link">Learn More</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Split Section -->
+    <section id="about" class="hp-about-split-dark">
+        <div class="hp-container split-flex">
+            <div class="split-left">
+                <h2 class="big-tag-dark">ABOUT<br><span>US</span></h2>
+            </div>
+            <div class="split-right">
+                <div class="content-box-dark">
+                    <span class="badge-accent"><b>Our Mission</b></span>
+                    <h3>Your Partner in Business Growth</h3>
+                    <p>ConnectUk Services acts as your consultant, helping you navigate the complex world of utility billing and payment technology. We find the perfect tariffs tailored for your industry.</p>
+                    <div class="stats-grid-dark">
+                        <div class="stat">
+                            <h4>100+</h4>
+                            <p>Clients Saved</p>
+                        </div>
+                        <div class="stat">
+                            <h4>50%+</h4>
+                            <p>Saved Annually</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="hp-faq">
+        <div class="hp-container">
+            <div class="section-head">
+                <h2 class="hp-section-title"><u>Why Choose Us?</u></h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>Why use ConnectUK Services?</h4>
+                    <p>Providers often hide their best rates. We have "partner-only" access that gets you exclusive commercial tariffs.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is switching complicated?</h4>
+                    <p>No. We handle all paperwork. The process is smooth with zero service interruption.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What about security?</h4>
+                    <p>All our hardware and till systems are fully PCI compliant, meeting the highest data security standards.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Serve all UK locations?</h4>
+                    <p>Yes. Our switching service for electricity, gas, and water is nationwide across the United Kingdom.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

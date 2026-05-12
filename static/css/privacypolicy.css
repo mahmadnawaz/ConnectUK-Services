@@ -1,0 +1,151 @@
+/* ConnectUk Services - Privacy Policy Styling */
+
+.policy-base-layer {
+    /* Header se neechay ka gap set kiya hai */
+    padding: 40px 0 60px 0; 
+    background: #f4f7fa;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.policy-card {
+    width: 90%;
+    max-width: 800px; /* Thora narrow kiya taake readable lage */
+    background: #ffffff;
+    border-radius: 12px;
+    /* Internal padding ko adjust kiya hai */
+    padding: 30px 40px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    /* Card ko thora aur niche push karne ke liye */
+    margin-top: 20px; 
+}
+
+/* Title Section */
+.policy-main-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.policy-main-title h1 {
+    font-size: 28px;
+    color: #0b1444; 
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.title-underline {
+    width: 45px;
+    height: 3px;
+    background: #2d82ff;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+/* Content Body */
+.intro {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.section-block {
+    margin-bottom: 25px;
+}
+
+.section-block h2 {
+    font-size: 1.2rem;
+    color: #0b1444;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.section-block h2 span {
+    background: #0b1444;
+    color: #ffffff;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.definition-box {
+    background: #f8fafc;
+    padding: 18px;
+    border-left: 4px solid #2d82ff;
+    border-radius: 8px;
+}
+
+.definition-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.definition-box li {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #334155;
+}
+
+/* Data Collection Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.stat-item {
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.stat-item i {
+    font-size: 20px;
+    color: #2d82ff;
+    margin-bottom: 8px;
+}
+
+.stat-item h4 {
+    font-size: 1rem;
+    color: #0b1444;
+}
+
+.stat-item p {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+/* Footer Contact */
+.footer-contact {
+    margin-top: 35px;
+    padding: 20px;
+    background: #0b1444;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.footer-contact h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.footer-contact a {
+    color: #ffb703;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .policy-card { padding: 25px 15px; }
+    .policy-base-layer { padding-top: 20px; }
+}

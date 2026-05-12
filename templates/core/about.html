@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+  <!-- Hero Section -->
+  <section class="hero-container">
+    <img src="{% static 'images/aboutustop.jpg' %}" alt="Connect UK Services Banner" class="hero-image">
+    
+    <div class="hero-overlay-layer">
+      <div class="hero-text-box">
+        <h1>Connect <span class="blue-text">UK</span> Services</h1>
+        <p>Your trusted partner for business utilities and payment solutions across the United Kingdom.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who We Are -->
+  <section class="about-section">
+    <div class="container">
+      <h2>Who We Are</h2>
+      <p>
+        <b>ConnectUK Services</b> is a premier digital consultancy and intermediary dedicated to simplifying utility and payment solutions. We bridge the gap between businesses and top-tier service providers, offering a centralized platform for <b>Merchant Card Machines, Electricity, Gas, and Water contract management.</b> <br>
+
+        Our mission is to eliminate manual paperwork and communication delays by providing a secure, real-time digital interface. By leveraging modern technology, we empower businesses to compare, apply, and manage their essential services effortlessly. 
+ 
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="services-section">
+    <div class="container">
+      <h2>What We Do</h2>
+      <div class="service-grid">
+        <!-- Card Machine -->
+        <div class="service-card">
+          <img src="{% static 'images/cardmachine.jpeg' %}" alt="Card Machines" class="service-img">
+          <div class="service-content">
+            <h3>💳 Card Machines</h3>
+            <p>Affordable card machine solutions for retail, restaurants, and shops.</p>
+          </div>
+        </div>
+                <div class="service-card">
+          <img src="{% static 'images/tillsystem.jpeg' %}" alt="Till Systems" class="service-img">
+          <div class="service-content">
+            <h3>💳 Till Systems</h3>
+            <p>Modern till systems for seamless transactions and efficient inventory management.</p>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <img src="{% static 'images/taptopay.jpg' %}" alt="Tap to Pay Systems" class="service-img">
+          <div class="service-content">
+            <h3>💳 Tap to Pay Systems</h3>
+            <p>Modern tap to pay solutions for seamless transactions and efficient inventory management.</p>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <img src="{% static 'images/electric.jpeg' %}" alt="Electricity" class="service-img">
+          <div class="service-content">
+            <h3>⚡ Electricity Management</h3>
+            <p>Switch to the best electricity tariffs to reduce monthly bills and avoid hidden charges.</p>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <img src="{% static 'images/gas.jpeg' %}" alt="Gas" class="service-img">
+          <div class="service-content">
+            <h3>🔥 Gas Management</h3>
+            <p>Save money on commercial gas usage with smart contract optimization and supplier comparison.</p>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <img src="{% static 'images/water.jpeg' %}" alt="Water" class="service-img">
+          <div class="service-content">
+            <h3>💧 Water Management</h3>
+            <p>We negotiate better water utility contracts and help businesses cut unnecessary costs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="mission-section">
+    <div class="container">
+      <h2>Our Mission</h2>
+      <p>To make business utilities and payment services affordable, transparent, and stress-free for every business owner in the UK.</p>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/quote.css' %}">
+    <title>{% if edit_mode %}Edit Your Inquiry{% else %}Get Your Quotes{% endif %} | Connect UK Services</title>
+</head>
+
+<section class="top-header">
+    <div class="header-inner">
+        <p class="sub-title">{% if edit_mode %}Update Details{% else %}Compare Business Prices{% endif %}</p>
+        <h1 class="main-title">
+            {% if edit_mode %}📝 Edit your service application details below.{% else %}Save up to 65% on your bills by comparing business suppliers{% endif %}
+        </h1>
+    </div>
+</section>
+
+<main class="form-container">
+    <h2 class="form-heading">{% if edit_mode %}Edit Application{% else %}Contracts Required Form{% endif %}</h2>
+    
+    <form action="{% if edit_mode %}{% url 'edit_request' req.id %}{% else %}{% url 'get_quote' %}{% endif %}" 
+      method="POST" enctype="multipart/form-data" class="energy-form">
+        {% csrf_token %}
+        
+        <div class="field-group">
+            <label for="legal-name">Legal Name</label>
+            <input type="text" id="legal-name" name="legal_name" value="{% if edit_mode %}{{ req.legal_name }}{% endif %}" required>
+        </div>
+
+        <div class="field-group">
+            <label for="trading-name">Trading Name</label>
+            <input type="text" id="trading-name" name="trading_name" value="{% if edit_mode %}{{ req.trading_name }}{% endif %}">
+        </div>
+
+        <div class="field-group">
+            <label for="contact-name">Contact Full Name</label>
+            <input type="text" id="contact-name" name="contact_name" value="{% if edit_mode %}{{ req.contact_name }}{% endif %}" required>
+        </div>
+
+        <div class="field-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{% if edit_mode %}{{ req.email }}{% endif %}" required>
+        </div>
+
+        <div class="field-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" value="{% if edit_mode %}{{ req.phone }}{% endif %}" required>
+        </div>
+
+        <div class="field-group">
+            <label for="service-type">Service Type</label>
+            <select id="service-type" name="service_type" required>
+                <option value="" disabled {% if not edit_mode and not selected_service %}selected{% endif %}>Select a Service</option>
+                
+                <option value="card_machine" 
+                    {% if edit_mode and req.service_type == "card_machine" %}selected
+                    {% elif selected_service == "Card Payment Machine" %}selected{% endif %}>
+                    Card Machine
+                </option>
+
+                <option value="tillsystem" 
+                    {% if edit_mode and req.service_type == "tillsystem" %}selected
+                    {% elif selected_service == "POS & Till Systems" %}selected{% endif %}>
+                    Till System
+                </option>
+
+                <option value="taptopay" 
+                    {% if edit_mode and req.service_type == "taptopay" %}selected
+                    {% elif selected_service == "Mobile Tap to Pay" %}selected{% endif %}>
+                    Tap to Pay
+                </option>
+
+                <option value="business_energy" 
+                    {% if edit_mode and req.service_type == "business_energy" %}selected
+                    {% elif selected_service == "Business Electricity" %}selected{% endif %}>
+                    Business Energy (Electricity)
+                </option>
+
+                <option value="business_gas" 
+                    {% if edit_mode and req.service_type == "business_gas" %}selected
+                    {% elif selected_service == "Business Gas" %}selected{% endif %}>
+                    Business Gas
+                </option>
+
+                <option value="business_water" 
+                    {% if edit_mode and req.service_type == "business_water" %}selected
+                    {% elif selected_service == "Business Water" %}selected{% endif %}>
+                    Business Water
+                </option>
+            </select>
+        </div>
+
+        <div class="field-group">
+            <label for="contract-length">Preferred Contract Length</label>
+            <select id="contract-length" name="contract_length">
+                <option value="12 Months" {% if edit_mode and req.contract_length == "12 Months" %}selected{% endif %}>12 Months</option>
+                <option value="18 Months" {% if edit_mode and req.contract_length == "18 Months" %}selected{% endif %}>18 Months</option>
+                <option value="24 Months" {% if edit_mode and req.contract_length == "24 Months" %}selected{% endif %}>24 Months</option>
+                <option value="36 Months" {% if edit_mode and req.contract_length == "36 Months" %}selected{% endif %}>36 Months</option>
+            </select>
+        </div>
+
+        <div class="field-group">
+            <label for="bank-name">Bank Account Name</label>
+            <input type="text" id="bank-name" name="bank_name" value="{% if edit_mode %}{{ req.bank_name }}{% endif %}" required>
+        </div>
+
+        <div class="field-group">
+            <label for="bank-acc-num">Bank Account Number</label>
+            <input type="text" id="bank-acc-num" name="bank_account_number" value="{% if edit_mode %}{{ req.bank_account_number }}{% endif %}" required>
+        </div>
+
+        <div class="field-group">
+            <label for="bank-sort">Bank Sortcode</label>
+            <input type="text" id="bank-sort" name="bank_sortcode" value="{% if edit_mode %}{{ req.bank_sortcode }}{% endif %}" required>
+        </div>
+
+        <div class="field-group">
+            <label for="invoices">Current Invoices {% if edit_mode %}(Leave empty to keep old files){% endif %}</label>
+            <div class="file-upload-wrapper">
+                <input type="file" id="invoices" name="invoices">
+                {% if edit_mode and req.invoices %}
+                    <p style="font-size: 12px; color: #059669;">Current: <a href="{{ req.invoices.url }}" target="_blank">View File</a></p>
+                {% endif %}
+                <p class="file-hint">File(s) size limit is 20MB.</p>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label for="id-proof">Identity Proof {% if edit_mode %}(Leave empty to keep old files){% endif %}</label>
+            <div class="file-upload-wrapper">
+                <input type="file" id="id-proof" name="id_proof">
+                {% if edit_mode and req.id_proof %}
+                    <p style="font-size: 12px; color: #059669;">Current: <a href="{{ req.id_proof.url }}" target="_blank">View File</a></p>
+                {% endif %}
+                <p class="file-hint">File(s) size limit is 20MB.</p>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label for="additional-info">Additional Information</label>
+            <textarea id="additional-info" name="additional_info" rows="4">{% if edit_mode %}{{ req.additional_info }}{% endif %}</textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">{% if edit_mode %}Update Application{% else %}Submit Inquiry{% endif %}</button>
+            {% if edit_mode %}
+                <a href="{% url 'dashboard' %}" class="btn-reset" style="text-decoration: none; text-align: center; display: inline-block; line-height: 40px;">Cancel</a>
+            {% else %}
+                <button type="reset" class="btn-reset">Reset</button>
+            {% endif %}
+        </div>
+    </form>
+</main>
+{% endblock %}

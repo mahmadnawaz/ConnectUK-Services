@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Uk Services</title>
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="ConnectUk Services"> 
+            </a>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'services' %}">Services</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'get_quote' %}" class="quote-btn">Get Your Quotes</a></li>
+                <li><a href="{% url 'dashboard' %}" class="dashboard-btn">Dashboard</a></li> 
+                
+                <!-- Logout Handling for Django 6 -->
+                <li>
+                    <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                    <a href="javascript:void(0)" class="logout-btn" onclick="document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            {% endif %}
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+</header>
+
+<!-- Messages Section -->
+{% if messages %}
+    <div class="messages-wrapper">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                <span class="icon">{% if message.tags == 'success' %}✅{% else %}ℹ️{% endif %}</span>
+                {{ message }}
+                <span class="close-btn" onclick="this.parentElement.style.display='none'">&times;</span>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<!-- Main Content Area -->
+<main>
+    {% block content %}
+    <!-- Content from other templates will be injected here -->
+    {% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-col">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" class="footer-logo" alt="ConnectUK Logo">
+            </a>
+        </div>
+        <div class="footer-col">
+            <h3>Contact Us</h3>
+            <p>Address: 117 Faircross Avenue, Barking, England, IG11 8QZ</p>
+            <p>Email: info@connectukservices.com</p>
+        </div>
+        <div class="footer-col">
+            <h3>Useful Links</h3>
+            <ul>
+                <li><a href="{% url 'about' %}">About Us</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                <li><a href="{% url 'privacypolicy' %}">Privacy Policy</a></li>
+                <li><a href="{% url 'complaint' %}">Complaints</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Our Social</h3>
+            <div class="social-icons">
+                <a href="#"><img src="{% static 'images/fb.png' %}" alt="Facebook"></a>
+                <a href="#"><img src="{% static 'images/whatsapp.jpg' %}" alt="WhatsApp"></a>
+                <a href="#"><img src="{% static 'images/linkedin.png' %}" alt="LinkedIn"></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        COPYRIGHT © 2026 ConnectUk Services. ALL RIGHTS RESERVED
+    </div>
+</footer>
+
+<script src="{% static 'js/script.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>
