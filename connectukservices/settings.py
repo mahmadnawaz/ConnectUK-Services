@@ -113,7 +113,7 @@ DATABASES = {
         'PASSWORD': 'ConnectUK_216',
         'CONN_MAX_AGE': 600,
         'OPTIONS': {
-            'connection_timeout': 60,
+            # Koi extra arguments yahan na dein jo driver support na karta ho
         }
     }
 }
