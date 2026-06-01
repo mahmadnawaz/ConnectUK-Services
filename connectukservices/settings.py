@@ -109,8 +109,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': CLOUD_DSN,
-        'USER': 'ADMIN',                  # Master Admin User
-        'PASSWORD': 'ConnectUK_216',      # Aap ka verified cloud database password
+        'USER': 'ADMIN',
+        'PASSWORD': 'ConnectUK_216',
+        'CONN_MAX_AGE': 600,  # Connection 10 minute tak alive rahega
+        'OPTIONS': {
+            'threaded': True,
+            'connection_timeout': 60,
+        }
     }
 }
 
@@ -142,7 +147,9 @@ LOGOUT_REDIRECT_URL = 'home'
 # ==============================================================================
 # 7. EMAIL CONFIGURATION (SMTP)
 # ==============================================================================
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# settings.py mein ye line change kar dein
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
