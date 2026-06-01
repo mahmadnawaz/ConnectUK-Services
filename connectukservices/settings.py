@@ -111,9 +111,8 @@ DATABASES = {
         'NAME': CLOUD_DSN,
         'USER': 'ADMIN',
         'PASSWORD': 'ConnectUK_216',
-        'CONN_MAX_AGE': 600,  # Connection 10 minute tak alive rahega
+        'CONN_MAX_AGE': 600,
         'OPTIONS': {
-            'threaded': True,
             'connection_timeout': 60,
         }
     }
