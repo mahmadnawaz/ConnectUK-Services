@@ -112,9 +112,7 @@ DATABASES = {
         'USER': 'ADMIN',
         'PASSWORD': 'ConnectUK_216',
         'CONN_MAX_AGE': 600,
-        'OPTIONS': {
-            # Koi extra arguments yahan na dein jo driver support na karta ho
-        }
+        'OPTIONS': {}  # <--- Bilkul khali rakhein, ye naye driver ke liye zaroori hai
     }
 }
 
