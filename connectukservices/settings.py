@@ -8,10 +8,28 @@ Final Version: June 1, 2026
 import os
 from pathlib import Path
 
+# ==============================================================================
+# 1. PATHS & PRODUCTION STATIC CONFIGURATION
+# ==============================================================================
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Security Settings
+# Static files root directory for Render production deployment
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# MEDIA FILES CONFIGURATION (Images/Uploads ke liye)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# ==============================================================================
+# 2. SECURITY & HOSTS CONFIGURATION
+# ==============================================================================
 SECRET_KEY = 'django-insecure-tr$$1v9t0t-z@xbd5j54a8^q6=h8mk)k0qgtz%63(2t*6he-ak'
 DEBUG = True
 
@@ -24,7 +42,10 @@ CSRF_TRUSTED_ORIGINS = [
     'https://distant-granola-chrome.ngrok-free.dev',
 ]
 
-# Application definition
+
+# ==============================================================================
+# 3. APPLICATION & MIDDLEWARE DEFINITION
+# ==============================================================================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -70,17 +91,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'connectukservices.wsgi.application'
 
-# --- Oracle Cloud Autonomous Database (Thin Mode Connection) ---
-# Dynamic Wallet Path Configuration
-WALLET_PATH = os.path.join(BASE_DIR, 'oracle_wallet').replace('\\', '/')
 
-# Autonomous Database DSN String
-# --- Oracle Cloud Autonomous Database (Thin Mode Connection Fix) ---
-# SSL Server DN Match ko default allow karne ke liye string ko clean kiya gaya hai
-
-# --- Oracle Cloud Autonomous Database (Final Verified Connection) ---
+# ==============================================================================
+# 4. DATABASE: ORACLE CLOUD AUTONOMOUS DATABASE (PaaS - Thin Mode)
+# ==============================================================================
 # Sahi Service Name aur SSL validation bypass ke sath optimized cloud connection
-
 CLOUD_DSN = (
     "(DESCRIPTION="
     "(RETRY_COUNT=20)(RETRY_DELAY=3)"
@@ -98,7 +113,10 @@ DATABASES = {
     }
 }
 
-# Password validation
+
+# ==============================================================================
+# 5. PASSWORD VALIDATION & INTERNATIONALIZATION
+# ==============================================================================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -106,28 +124,23 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static Files
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
 
-# MEDIA FILES CONFIGURATION (Images/Uploads ke liye)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# Authentication Redirects
+# ==============================================================================
+# 6. AUTHENTICATION REDIRECTS
+# ==============================================================================
 LOGIN_URL = '/accounts/login/' 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'home'
 
-# Email Settings (mumerconsultant@gmail.com)
+
+# ==============================================================================
+# 7. EMAIL CONFIGURATION (SMTP)
+# ==============================================================================
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
