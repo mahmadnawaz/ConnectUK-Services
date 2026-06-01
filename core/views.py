@@ -27,7 +27,7 @@ def contact(request):
             )
             messages.success(request, f"Thank you, {name}! Your message has been sent successfully.")
         except Exception as e:
-            messages.error(request, f"Maazrat! Message save nahi ho saka: {e}")
+            messages.error(request, f"An error occurred while saving your message: {e}")
         
         return redirect('contact')
         

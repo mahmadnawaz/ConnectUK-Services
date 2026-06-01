@@ -1,11 +1,15 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings # Import zaroori hai
-from django.conf.urls.static import static # Import zaroori hai
+from django.conf import settings 
+from django.conf.urls.static import static 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')), 
+    
+    # SYSTEM UPGRADE: Django ke built-in auth URLs shamil kiye hain password reset system ke liye
+    path('accounts/', include('django.contrib.auth.urls')), 
+    
     path('', include('core.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('services/', include('services.urls')),

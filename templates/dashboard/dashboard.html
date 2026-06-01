@@ -7,7 +7,6 @@
 
 {% block content %}
 <div class="dashboard-container">
-    <!-- Header Section -->
     <div class="dashboard-header">
         <div class="welcome-text">
             <h1>User Dashboard</h1>
@@ -18,7 +17,6 @@
         </div>
     </div>
 
-    <!-- Stats Reporting Section -->
     <div class="stats-row">
         <div class="stat-card card-total">
             <p>Total Requests</p>
@@ -38,15 +36,13 @@
         </div>
     </div>
 
-    <!-- Search Bar -->
     <div class="search-container">
         <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search by Legal Name or Service..." class="search-input">
     </div>
 
-    <!-- Applications Table -->
     <div class="table-card">
         <h2>Your Recent Applications</h2>
-        <div class="table-responsive">
+        <div class="table-container">
             <table id="requestsTable">
                 <thead>
                     <tr>
@@ -62,11 +58,9 @@
                     <tr>
                         <td><strong>{{ req.legal_name }}</strong></td>
                         <td>
-                            <!-- Fixed: Direct fetch if display is empty -->
                             <span class="service-badge">{{ req.service_type }}</span>
                         </td>
                         <td>
-                            <!-- Fixed: Status Labels and dynamic color class -->
                             <span class="status-badge {{ req.status|lower }}">
                                 {% if req.status == 'pending' %} Pending Review
                                 {% elif req.status == 'processing' %} Processing
@@ -77,31 +71,27 @@
                         </td>
                         <td>{{ req.created_at|date:"d M Y" }}</td>
                         <td>
-                            <button class="view-btn" onclick="openModal(
-                                '{{ req.legal_name|escapejs }}', 
-                                '{{ req.trading_name|escapejs }}', 
-                                '{{ req.service_type|escapejs }}', 
-                                '{{ req.contact_name|escapejs }}', 
-                                '{{ req.email|escapejs }}', 
-                                '{{ req.phone|escapejs }}', 
-                                '{{ req.contract_length|escapejs }}', 
-                                '{{ req.bank_name|escapejs }}', 
-                                '{{ req.bank_account_number|escapejs }}', 
-                                '{{ req.bank_sortcode|escapejs }}', 
-                                '{{ req.additional_info|escapejs }}',
-                                '{% if req.invoices %}{{ req.invoices.url }}{% endif %}',
-                                '{% if req.id_proof %}{{ req.id_proof.url }}{% endif %}'
-                            )">
-                                👁 View
-                            </button>
+                            <div class="action-cell-wrapper">
+                                <button class="view-btn" onclick="openModal(
+                                    '{{ req.legal_name|escapejs }}', 
+                                    '{{ req.trading_name|escapejs }}', 
+                                    '{{ req.service_type|escapejs }}', 
+                                    '{{ req.contact_name|escapejs }}', 
+                                    '{{ req.email|escapejs }}', 
+                                    '{{ req.phone|escapejs }}', 
+                                    '{{ req.contract_length|escapejs }}', 
+                                    '{{ req.bank_name|escapejs }}', 
+                                    '{{ req.bank_account_number|escapejs }}', 
+                                    '{{ req.bank_sortcode|escapejs }}', 
+                                    '{{ req.additional_info|escapejs }}',
+                                    '{% if req.invoices %}{{ req.invoices.url }}{% endif %}',
+                                    '{% if req.id_proof %}{{ req.id_proof.url }}{% endif %}'
+                                )">👁 View</button>
 
-                            <a href="{% url 'edit_request' req.id %}" class="edit-link">
-                                📝 Edit
-                            </a>
+                                <a href="{% url 'edit_request' req.id %}" class="edit-link">📝 Edit</a>
 
-                            <a href="{% url 'delete_request' req.id %}" class="delete-link" onclick="return confirm('Are you sure you want to delete this?')">
-                                🗑 Delete
-                            </a>
+                                <a href="{% url 'delete_request' req.id %}" class="delete-link" onclick="return confirm('Are you sure you want to delete this?')">🗑 Delete</a>
+                            </div>
                         </td>
                     </tr>
                     {% empty %}
@@ -115,7 +105,6 @@
     </div>
 </div>
 
-<!-- Details Modal -->
 <div id="detailsModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -149,13 +138,13 @@ function openModal(legal, trading, service, contact, email, phone, contract, ban
             <div class="detail-item"><strong>Bank Name:</strong> <span>${bank}</span></div>
             <div class="detail-item"><strong>Account Number:</strong> <span>${account}</span></div>
             <div class="detail-item"><strong>Bank Sortcode:</strong> <span>${sortcode}</span></div>
-            <div class="detail-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
+            <div class="detail-item full-width-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
                 <strong>Uploaded Invoice:</strong> <div>${invoiceHtml}</div>
             </div>
-            <div class="detail-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
+            <div class="detail-item full-width-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
                 <strong>ID Proof:</strong> <div>${idProofHtml}</div>
             </div>
-            <div class="detail-item" style="grid-column: span 2; border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
+            <div class="detail-item full-width-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
                 <strong>Additional Info:</strong> <p style="color: #475569; margin-top: 5px;">${info || 'No extra information provided.'}</p>
             </div>
         </div>
