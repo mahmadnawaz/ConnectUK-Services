@@ -1,33 +1,39 @@
 import threading
 import logging
+import os
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.core.mail import send_mail
-from django.conf import settings
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 
-# Logger setup
 logger = logging.getLogger(__name__)
 
-# --- Helper function for background email ---
+# --- Helper function for Background Email (Using Brevo API) ---
 def send_async_email(subject, message, recipient_list):
     try:
-        send_mail(
-            subject, 
-            message, 
-            settings.DEFAULT_FROM_EMAIL, 
-            recipient_list, 
-            fail_silently=False
+        # Brevo API Configuration
+        configuration = sib_api_v3_sdk.Configuration()
+        configuration.api_key['api-key'] = os.environ.get('BREVO_API_KEY')
+        
+        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+        
+        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+            to=[{"email": recipient_list[0]}],
+            sender={"email": "ahn63400@gmail.com", "name": "ConnectUK Services"},
+            subject=subject,
+            text_content=message
         )
-        logger.info(f"Email successfully sent to {recipient_list}")
+        
+        api_instance.send_transac_email(send_smtp_email)
+        logger.info(f"Email successfully sent via API to {recipient_list}")
     except Exception as e:
-        # Render ke logs mein ye error dikhega
-        logger.error(f"CRITICAL: Background Email Error: {e}")
+        logger.error(f"CRITICAL: Brevo API Email Error: {e}")
 
 # --- Signup View ---
 def signup_view(request):
@@ -50,30 +56,22 @@ def signup_view(request):
             myuser.is_active = False 
             myuser.save()
 
-            # Activation Link Generation
             current_site = get_current_site(request)
             subject = "Activate your ConnectUK Account"
             uid = urlsafe_base64_encode(force_bytes(myuser.pk))
             token = default_token_generator.make_token(myuser)
             
-            # protocol ko 'https' fix kar diya hai kyunki Render par SSL hota hai
             activation_link = f"https://{current_site.domain}/accounts/activate/{uid}/{token}/"
             message = f"Hi {username},\n\nThank you for registering. Please click on the link below to activate your account:\n\n{activation_link}"
             
-            # Background Thread
-            email_thread = threading.Thread(
-                target=send_async_email, 
-                args=(subject, message, [email])
-            )
+            email_thread = threading.Thread(target=send_async_email, args=(subject, message, [email]))
             email_thread.start()
             
-            messages.success(request, "Registration successful! Please check your email to activate your account.")
+            messages.success(request, "Registration successful! Please check your email.")
             return redirect('login')
-            
         except Exception as e:
-            messages.error(request, f"Registration error: {e}")
+            messages.error(request, f"Error: {e}")
             return render(request, 'accounts/signup.html')
-    
     return render(request, 'accounts/signup.html')
 
 # --- Account Activation View (Waisa hi rahega) ---
