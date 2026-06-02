@@ -150,14 +150,13 @@ LOGOUT_REDIRECT_URL = 'home'
 # 7. EMAIL CONFIGURATION (SMTP - Brevo Provider)
 # ==============================================================================
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-relay.brevo.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
-# Environment variables se value utha rahe hain, agar na mile toh default values use hongi
-# EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp-relay.brevo.com')
-# EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'ad4dca001@smtp-brevo.com')
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# Ye variables aapne Render 'Environment' settings mein daalne hain
+EMAIL_HOST_USER = 'ad4dca001@smtp-brevo.com' 
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # Yahan SMTP Key aayegi
 
-# EMAIL_USE_TLS = True
-# EMAIL_TIMEOUT = 30  # Connection timeout 30s
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'ConnectUK Services <ahn63400@gmail.com>')
+DEFAULT_FROM_EMAIL = 'ConnectUK Services <ahn63400@gmail.com>'

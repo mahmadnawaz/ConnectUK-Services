@@ -1,8 +1,4 @@
-import threading
 import logging
-import os
-import sib_api_v3_sdk
-from sib_api_v3_sdk.rest import ApiException
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -11,33 +7,24 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
-# --- Helper function for Background Email (Using Brevo API) ---
-def send_async_email(subject, message, recipient_list):
+# --- Helper function (Using standard Django SMTP) ---
+def send_async_email(subject, message, recipient_email):
     try:
-        api_key = os.environ.get('BREVO_API_KEY')
-        if not api_key:
-            logger.error("API KEY IS EMPTY/NONE!")
-            return
-        
-        configuration = sib_api_v3_sdk.Configuration()
-        configuration.api_key['api-key'] = api_key
-        
-        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
-        
-        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
-            to=[{"email": recipient_list[0]}],
-            sender={"email": "ahn63400@gmail.com", "name": "ConnectUK Services"},
+        send_mail(
             subject=subject,
-            text_content=message
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[recipient_email],
+            fail_silently=False,
         )
-        
-        api_instance.send_transac_email(send_smtp_email)
-        logger.info(f"Email successfully sent via API to {recipient_list}")
+        logger.info(f"Email successfully sent to {recipient_email}")
     except Exception as e:
-        logger.error(f"CRITICAL: Brevo API Email Error: {e}")
+        logger.error(f"CRITICAL: Email Error: {e}")
 
 # --- Signup View ---
 def signup_view(request):
@@ -66,16 +53,17 @@ def signup_view(request):
             token = default_token_generator.make_token(myuser)
             
             activation_link = f"https://{current_site.domain}/accounts/activate/{uid}/{token}/"
-            message = f"Hi {username},\n\nThank you for registering. Please click on the link below to activate your account:\n\n{activation_link}"
+            message = f"Hi {username},\n\nThank you for registering. Please click the link to activate your account:\n\n{activation_link}"
             
-            email_thread = threading.Thread(target=send_async_email, args=(subject, message, [email]))
-            email_thread.start()
+            # Direct call to email (simple and reliable)
+            send_async_email(subject, message, email)
             
             messages.success(request, "Registration successful! Please check your email.")
             return redirect('login')
         except Exception as e:
             messages.error(request, f"Error: {e}")
             return render(request, 'accounts/signup.html')
+            
     return render(request, 'accounts/signup.html')
 
 # --- Account Activation View (Waisa hi rahega) ---
