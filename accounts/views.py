@@ -1,4 +1,5 @@
-import logging
+import requests
+import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -7,24 +8,26 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import send_mail
-from django.conf import settings
 
-logger = logging.getLogger(__name__)
-
-# --- Helper function (Using standard Django SMTP) ---
-def send_async_email(subject, message, recipient_email):
+# --- Final Helper Function (API Based) ---
+def send_notification_email(subject, message, recipient_email):
+    api_key = os.environ.get('BREVO_API_KEY') 
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {
+        "api-key": api_key,
+        "content-type": "application/json"
+    }
+    payload = {
+        "sender": {"email": "ahn63400@gmail.com", "name": "ConnectUK Services"},
+        "to": [{"email": recipient_email}],
+        "subject": subject,
+        "textContent": message
+    }
     try:
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[recipient_email],
-            fail_silently=False,
-        )
-        logger.info(f"Email successfully sent to {recipient_email}")
+        # Non-blocking API request
+        requests.post(url, json=payload, headers=headers, timeout=5)
     except Exception as e:
-        logger.error(f"CRITICAL: Email Error: {e}")
+        print(f"Notification Error: {e}")
 
 # --- Signup View ---
 def signup_view(request):
@@ -53,10 +56,10 @@ def signup_view(request):
             token = default_token_generator.make_token(myuser)
             
             activation_link = f"https://{current_site.domain}/accounts/activate/{uid}/{token}/"
-            message = f"Hi {username},\n\nThank you for registering. Please click the link to activate your account:\n\n{activation_link}"
+            message = f"Hi {username},\n\nThank you for registering. Please click to activate: {activation_link}"
             
-            # Direct call to email (simple and reliable)
-            send_async_email(subject, message, email)
+            # API call instead of SMTP
+            send_notification_email(subject, message, email)
             
             messages.success(request, "Registration successful! Please check your email.")
             return redirect('login')
