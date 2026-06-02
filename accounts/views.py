@@ -9,13 +9,17 @@ from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 
-# --- Final Helper Function (API Based) ---
+# --- Updated Helper Function (With Debugging) ---
 def send_notification_email(subject, message, recipient_email):
-    api_key = os.environ.get('BREVO_API_KEY') 
+    api_key = os.environ.get('BREVO_API_KEY')
+    # LOG: Check if API key is loaded in Render
+    print(f"DEBUG: API Key present: {bool(api_key)}") 
+    
     url = "https://api.brevo.com/v3/smtp/email"
     headers = {
         "api-key": api_key,
-        "content-type": "application/json"
+        "content-type": "application/json",
+        "accept": "application/json"
     }
     payload = {
         "sender": {"email": "ahn63400@gmail.com", "name": "ConnectUK Services"},
@@ -23,11 +27,15 @@ def send_notification_email(subject, message, recipient_email):
         "subject": subject,
         "textContent": message
     }
+    
     try:
-        # Non-blocking API request
-        requests.post(url, json=payload, headers=headers, timeout=5)
+        response = requests.post(url, json=payload, headers=headers, timeout=10)
+        # LOG: Check what Brevo says back
+        print(f"DEBUG: Brevo Status Code: {response.status_code}")
+        print(f"DEBUG: Brevo Response Body: {response.text}")
     except Exception as e:
-        print(f"Notification Error: {e}")
+        # LOG: Check if there's a connection error
+        print(f"DEBUG: Critical Notification Error: {e}")
 
 # --- Signup View ---
 def signup_view(request):
@@ -58,7 +66,7 @@ def signup_view(request):
             activation_link = f"https://{current_site.domain}/accounts/activate/{uid}/{token}/"
             message = f"Hi {username},\n\nThank you for registering. Please click to activate: {activation_link}"
             
-            # API call instead of SMTP
+            # Trigger API call
             send_notification_email(subject, message, email)
             
             messages.success(request, "Registration successful! Please check your email.")
@@ -69,7 +77,7 @@ def signup_view(request):
             
     return render(request, 'accounts/signup.html')
 
-# --- Account Activation View (Waisa hi rahega) ---
+# --- Account Activation View ---
 def activate_view(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -86,7 +94,7 @@ def activate_view(request, uidb64, token):
         messages.error(request, "Activation link is invalid or has expired!")
         return redirect('signup')
 
-# --- Login View (Waisa hi rahega) ---
+# --- Login View ---
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
@@ -116,7 +124,7 @@ def login_view(request):
             
     return render(request, 'accounts/login.html')
 
-# --- Logout View (Waisa hi rahega) ---
+# --- Logout View ---
 def logout_view(request):
     logout(request)
     messages.info(request, "You have been logged out.")
