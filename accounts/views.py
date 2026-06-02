@@ -76,5 +76,55 @@ def signup_view(request):
     
     return render(request, 'accounts/signup.html')
 
-# --- Baki views (activate, login, logout) waisay hi rahen ge ---
-# (Aapke purane code wale niche yahan paste kar dein)
+# --- Account Activation View (Waisa hi rahega) ---
+def activate_view(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True 
+        user.save()
+        messages.success(request, "Your account has been activated! You can now login.")
+        return redirect('login')
+    else:
+        messages.error(request, "Activation link is invalid or has expired!")
+        return redirect('signup')
+
+# --- Login View (Waisa hi rahega) ---
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
+    if request.method == "POST":
+        email_input = request.POST.get('email')
+        p = request.POST.get('password')
+        
+        try:
+            user_obj = User.objects.get(email=email_input)
+            username = user_obj.username 
+        except User.DoesNotExist:
+            username = None
+
+        user = authenticate(username=username, password=p)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Welcome back!")
+            return redirect('dashboard')
+        else:
+            if username and User.objects.filter(username=username, is_active=False).exists():
+                messages.warning(request, "Please activate your account via email first!")
+            else:
+                messages.error(request, "Invalid email or password!")
+            return render(request, 'accounts/login.html')
+            
+    return render(request, 'accounts/login.html')
+
+# --- Logout View (Waisa hi rahega) ---
+def logout_view(request):
+    logout(request)
+    messages.info(request, "You have been logged out.")
+    return redirect('home')
