@@ -105,6 +105,7 @@ CLOUD_DSN = (
     "(SECURITY=(ssl_server_dn_match=no)))"
 )
 
+# settings.py mein ye change karein
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
@@ -112,7 +113,7 @@ DATABASES = {
         'USER': 'ADMIN',
         'PASSWORD': 'ConnectUK_216',
         'CONN_MAX_AGE': 600,
-        'OPTIONS': {}  # <--- Bilkul khali rakhein, ye naye driver ke liye zaroori hai
+        'OPTIONS': {}  # <--- Bilkul khali rakhein
     }
 }
 
@@ -149,7 +150,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 10 # 10 seconds timeout taake site hang na ho
 EMAIL_HOST_USER = 'mumerconsultant@gmail.com'
+# Yahan 16-character ka App Password use karein
 EMAIL_HOST_PASSWORD = 'newmwegkgfijkusy' 
 
 DEFAULT_FROM_EMAIL = 'ConnectUK Services <mumerconsultant@gmail.com>'
