@@ -146,15 +146,17 @@ LOGOUT_REDIRECT_URL = 'home'
 # 7. EMAIL CONFIGURATION (SMTP - Brevo Provider)
 # ==============================================================================
 
+# ==============================================================================
+# 7. EMAIL CONFIGURATION (SMTP - Brevo Provider)
+# ==============================================================================
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-relay.brevo.com'
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_TIMEOUT = 10 
+EMAIL_USE_TLS = True  # Brevo ke liye TLS zaroori hai
+EMAIL_TIMEOUT = 30    # Connection timeout ko 30s tak extend kiya
 EMAIL_HOST_USER = 'ad4dca001@smtp-brevo.com'
 
-# Yahan hum Render ke Environment Variables se password utha rahe hain
-# Ise code mein hardcode na karein
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 DEFAULT_FROM_EMAIL = 'ConnectUK Services <ahn63400@gmail.com>'
