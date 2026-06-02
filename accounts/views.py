@@ -17,9 +17,13 @@ logger = logging.getLogger(__name__)
 # --- Helper function for Background Email (Using Brevo API) ---
 def send_async_email(subject, message, recipient_list):
     try:
-        # Brevo API Configuration
+        api_key = os.environ.get('BREVO_API_KEY')
+        if not api_key:
+            logger.error("API KEY IS EMPTY/NONE!")
+            return
+        
         configuration = sib_api_v3_sdk.Configuration()
-        configuration.api_key['api-key'] = os.environ.get('BREVO_API_KEY')
+        configuration.api_key['api-key'] = api_key
         
         api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
         
