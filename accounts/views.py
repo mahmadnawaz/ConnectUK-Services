@@ -1,5 +1,6 @@
 import requests
 import os
+import threading
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -9,12 +10,12 @@ from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 
-# --- Updated Helper Function (With Debugging) ---
+
+# --- Helper Function ---
 def send_notification_email(subject, message, recipient_email):
     api_key = os.environ.get('BREVO_API_KEY')
-    # LOG: Check if API key is loaded in Render
-    print(f"DEBUG: API Key present: {bool(api_key)}") 
-    
+    print(f"DEBUG: API Key present: {bool(api_key)}")
+
     url = "https://api.brevo.com/v3/smtp/email"
     headers = {
         "api-key": api_key,
@@ -27,15 +28,14 @@ def send_notification_email(subject, message, recipient_email):
         "subject": subject,
         "textContent": message
     }
-    
+
     try:
         response = requests.post(url, json=payload, headers=headers, timeout=10)
-        # LOG: Check what Brevo says back
         print(f"DEBUG: Brevo Status Code: {response.status_code}")
         print(f"DEBUG: Brevo Response Body: {response.text}")
     except Exception as e:
-        # LOG: Check if there's a connection error
         print(f"DEBUG: Critical Notification Error: {e}")
+
 
 # --- Signup View ---
 def signup_view(request):
@@ -48,34 +48,41 @@ def signup_view(request):
         if pass1 != pass2:
             messages.error(request, "Passwords do not match!")
             return render(request, 'accounts/signup.html')
-        
+
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists!")
             return render(request, 'accounts/signup.html')
 
         try:
             myuser = User.objects.create_user(username, email, pass1)
-            myuser.is_active = False 
+            myuser.is_active = False
             myuser.save()
 
             current_site = get_current_site(request)
             subject = "Activate your ConnectUK Account"
             uid = urlsafe_base64_encode(force_bytes(myuser.pk))
             token = default_token_generator.make_token(myuser)
-            
+
             activation_link = f"https://{current_site.domain}/accounts/activate/{uid}/{token}/"
             message = f"Hi {username},\n\nThank you for registering. Please click to activate: {activation_link}"
-            
-            # Trigger API call
-            send_notification_email(subject, message, email)
-            
+
+            # Background thread mein email bhejo — worker timeout nahi aayega
+            thread = threading.Thread(
+                target=send_notification_email,
+                args=(subject, message, email)
+            )
+            thread.daemon = True
+            thread.start()
+
             messages.success(request, "Registration successful! Please check your email.")
             return redirect('login')
+
         except Exception as e:
             messages.error(request, f"Error: {e}")
             return render(request, 'accounts/signup.html')
-            
+
     return render(request, 'accounts/signup.html')
+
 
 # --- Account Activation View ---
 def activate_view(request, uidb64, token):
@@ -86,13 +93,14 @@ def activate_view(request, uidb64, token):
         user = None
 
     if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True 
+        user.is_active = True
         user.save()
         messages.success(request, "Your account has been activated! You can now login.")
         return redirect('login')
     else:
         messages.error(request, "Activation link is invalid or has expired!")
         return redirect('signup')
+
 
 # --- Login View ---
 def login_view(request):
@@ -102,18 +110,18 @@ def login_view(request):
     if request.method == "POST":
         email_input = request.POST.get('email')
         p = request.POST.get('password')
-        
+
         try:
             user_obj = User.objects.get(email=email_input)
-            username = user_obj.username 
+            username = user_obj.username
         except User.DoesNotExist:
             username = None
 
         user = authenticate(username=username, password=p)
-        
+
         if user is not None:
             login(request, user)
-            messages.success(request, f"Welcome back!")
+            messages.success(request, "Welcome back!")
             return redirect('dashboard')
         else:
             if username and User.objects.filter(username=username, is_active=False).exists():
@@ -121,8 +129,9 @@ def login_view(request):
             else:
                 messages.error(request, "Invalid email or password!")
             return render(request, 'accounts/login.html')
-            
+
     return render(request, 'accounts/login.html')
+
 
 # --- Logout View ---
 def logout_view(request):
