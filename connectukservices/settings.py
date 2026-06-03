@@ -54,12 +54,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Cloudinary
+    'cloudinary_storage',
+    'cloudinary',
+    
     # Hamari Apps
     'core',
     'accounts',
     'services',
     'dashboard',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -156,3 +161,16 @@ EMAIL_HOST_USER = 'ad4dca001@smtp-brevo.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # Yahan SMTP Key aayegi
 
 DEFAULT_FROM_EMAIL = 'ConnectUK Services <ahn63400@gmail.com>'
+
+# ==============================================================================
+# 8. CLOUDINARY CONFIGURATION (Media Files)
+# ==============================================================================
+import cloudinary
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
