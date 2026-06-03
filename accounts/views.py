@@ -193,23 +193,39 @@ def password_reset_confirm_view(request, uidb64, token):
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
-    if user is not None and default_token_generator.check_token(user, token):
-        if request.method == "POST":
-            new_pass1 = request.POST.get('new_password1')
-            new_pass2 = request.POST.get('new_password2')
-
-            if new_pass1 != new_pass2:
-                messages.error(request, "Passwords do not match!")
-                return render(request, 'registration/password_reset_confirm.html')
-
-            user.set_password(new_pass1)
-            user.save()
-            return redirect('password_reset_complete')
-
-        return render(request, 'registration/password_reset_confirm.html')
+    # Django 4+ mein token 'set-password' session mein store hota hai
+    session_token_key = '_password_reset_token'
+    
+    if token != 'set-password':
+        # Pehli baar link khulta hai — token validate karo aur session mein save karo
+        if user is not None and default_token_generator.check_token(user, token):
+            request.session[session_token_key] = token
+            return redirect(f'/accounts/reset/{uidb64}/set-password/')
+        else:
+            messages.error(request, "Reset link is invalid or has expired!")
+            return render(request, 'registration/password_reset_confirm.html', {'validlink': False})
     else:
-        messages.error(request, "Reset link is invalid or has expired!")
-        return redirect('password_reset')
+        # 'set-password' URL par aaya — session se token lo
+        token = request.session.get(session_token_key)
+        if user is None or not default_token_generator.check_token(user, token):
+            messages.error(request, "Reset link is invalid or has expired!")
+            return render(request, 'registration/password_reset_confirm.html', {'validlink': False})
+
+    if request.method == "POST":
+        new_pass1 = request.POST.get('new_password1')
+        new_pass2 = request.POST.get('new_password2')
+
+        if new_pass1 != new_pass2:
+            messages.error(request, "Passwords do not match!")
+            return render(request, 'registration/password_reset_confirm.html', {'validlink': True})
+
+        user.set_password(new_pass1)
+        user.save()
+        # Session clear karo
+        request.session.pop(session_token_key, None)
+        return redirect('password_reset_complete')
+
+    return render(request, 'registration/password_reset_confirm.html', {'validlink': True})
 
 
 # --- Password Reset Complete View ---
