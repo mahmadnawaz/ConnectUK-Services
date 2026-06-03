@@ -40,7 +40,6 @@ def send_notification_email(subject, message, recipient_email):
 # --- Signup View ---
 def signup_view(request):
     if request.method == "POST":
-        username = request.POST.get('username')
         email = request.POST.get('email')
         pass1 = request.POST.get('pass1')
         pass2 = request.POST.get('pass2')
@@ -49,11 +48,19 @@ def signup_view(request):
             messages.error(request, "Passwords do not match!")
             return render(request, 'accounts/signup.html')
 
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already exists!")
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "This email is already registered!")
             return render(request, 'accounts/signup.html')
 
         try:
+            # Username automatically email se generate karo
+            base_username = email.split('@')[0]
+            username = base_username
+            counter = 1
+            while User.objects.filter(username=username).exists():
+                username = f"{base_username}{counter}"
+                counter += 1
+
             myuser = User.objects.create_user(username, email, pass1)
             myuser.is_active = False
             myuser.save()
@@ -64,9 +71,8 @@ def signup_view(request):
             token = default_token_generator.make_token(myuser)
 
             activation_link = f"https://{current_site.domain}/accounts/activate/{uid}/{token}/"
-            message = f"Hi {username},\n\nThank you for registering. Please click to activate: {activation_link}"
+            message = f"Hi,\n\nThank you for registering. Please click to activate: {activation_link}"
 
-            # Background thread mein email bhejo — worker timeout nahi aayega
             thread = threading.Thread(
                 target=send_notification_email,
                 args=(subject, message, email)
