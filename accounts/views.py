@@ -53,7 +53,6 @@ def signup_view(request):
             return render(request, 'accounts/signup.html')
 
         try:
-            # Username automatically email se generate karo
             base_username = email.split('@')[0]
             username = base_username
             counter = 1
@@ -144,3 +143,75 @@ def logout_view(request):
     logout(request)
     messages.info(request, "You have been logged out.")
     return redirect('home')
+
+
+# --- Password Reset View ---
+def password_reset_view(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
+            current_site = get_current_site(request)
+            reset_link = f"https://{current_site.domain}/accounts/reset/{uid}/{token}/"
+
+            subject = "Password Reset - ConnectUK Services"
+            message = (
+                f"Hi,\n\n"
+                f"We received a request to reset your password.\n\n"
+                f"Click the link below to reset your password:\n{reset_link}\n\n"
+                f"If you did not request this, please ignore this email.\n\n"
+                f"Regards,\nConnectUK Services Team"
+            )
+
+            thread = threading.Thread(
+                target=send_notification_email,
+                args=(subject, message, email)
+            )
+            thread.daemon = True
+            thread.start()
+
+        except User.DoesNotExist:
+            pass
+
+        return redirect('password_reset_done')
+
+    return render(request, 'registration/password_reset_form.html')
+
+
+# --- Password Reset Done View ---
+def password_reset_done_view(request):
+    return render(request, 'registration/password_reset_done.html')
+
+
+# --- Password Reset Confirm View ---
+def password_reset_confirm_view(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == "POST":
+            new_pass1 = request.POST.get('new_password1')
+            new_pass2 = request.POST.get('new_password2')
+
+            if new_pass1 != new_pass2:
+                messages.error(request, "Passwords do not match!")
+                return render(request, 'registration/password_reset_confirm.html')
+
+            user.set_password(new_pass1)
+            user.save()
+            return redirect('password_reset_complete')
+
+        return render(request, 'registration/password_reset_confirm.html')
+    else:
+        messages.error(request, "Reset link is invalid or has expired!")
+        return redirect('password_reset')
+
+
+# --- Password Reset Complete View ---
+def password_reset_complete_view(request):
+    return render(request, 'registration/password_reset_complete.html')
