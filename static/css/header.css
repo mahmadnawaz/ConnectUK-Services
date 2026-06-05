@@ -37,14 +37,13 @@ nav {
     gap: 10px;
 }
 
-/* Base styles for all links (light semi-transparent for general links) */
 .nav-links a {
     text-decoration: none;
     color: white;
     font-weight: 600;
     padding: 8px 15px;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.1); /* Default light background */
+    background: rgba(255, 255, 255, 0.1); 
     transition: 0.3s;
 }
 
@@ -53,46 +52,43 @@ nav {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* --- Header Button Specific Colors --- */
-/* (Targets the bright colored buttons to override general styles) */
-
 /* Get Your Quotes (Orange) */
 .nav-links .quote-btn {
-    background-color: #f97316; /* Bright Orange */
+    background-color: #f97316; 
     color: white;
     border: 1px solid transparent;
 }
 
 .nav-links .quote-btn:hover {
-    background-color: #f59e0b; /* Slightly different orange on hover */
+    background-color: #f59e0b; 
 }
 
 /* Dashboard (Red) */
 .nav-links .dashboard-btn {
-    background-color: #dc2626; /* Bright Red */
+    background-color: #dc2626; 
     color: white;
     border: 1px solid transparent;
 }
 
 .nav-links .dashboard-btn:hover {
-    background-color: #b91c1c; /* Slightly different red on hover */
+    background-color: #b91c1c; 
 }
 
 /* Logout (Red) */
 .nav-links .logout-btn {
-    background-color: #e78e28; /* Bright Red */
+    background-color: #e78e28; 
     color: white;
     border: 1px solid transparent;
 }
 
 .nav-links .logout-btn:hover {
-    background-color: #b91c1c; /* Slightly different red on hover */
+    background-color: #b91c1c; 
 }
 
-/* --- Alert Messages Styling (same as before) --- */
+/* --- Alert Messages Styling --- */
 .messages-wrapper {
     max-width: 1100px;
-    margin: 20px auto 0; /* Navbar ke niche thora gap */
+    margin: 20px auto 0; 
     padding: 0 20px;
 }
 

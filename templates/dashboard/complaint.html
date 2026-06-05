@@ -87,8 +87,7 @@
                 {% endfor %}
             {% endif %}
 
-            <!-- action line add kar dein -->
-            <form method="POST" action="{% url 'complaints' %}" class="modern-form">
+           <form method="POST" action="{% url 'complaints' %}" class="modern-form">
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="input-group">

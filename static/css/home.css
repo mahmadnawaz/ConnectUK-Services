@@ -136,36 +136,133 @@ body {
 }
 
 /* 3. CAPABILITIES / SERVICES */
-.hp-services { padding: 100px 0; background: #fff; }
-.hp-section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; font-weight: 800; }
-.hp-services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.hp-service-card { 
-    background: #fff; border-radius: 20px; border: 1px solid #f1f5f9; 
-    overflow: hidden; transition: 0.4s; height: 100%; display: flex; flex-direction: column;
+.hp-services { 
+    padding: 100px 0; 
+    background: #fff; 
 }
-.hp-service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-.card-img-fix { height: 240px; overflow: hidden; }
-.card-img-fix img { width: 100%; height: 100%; object-fit: cover; }
-.card-body { padding: 30px; text-align: center; }
-.card-link { color: var(--accent); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--accent); }
+
+.hp-section-title { 
+    text-align: center; 
+    font-size: 2.5rem; 
+    margin-bottom: 60px; 
+    font-weight: 800; 
+}
+
+.hp-services-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; 
+}
+
+.hp-service-card { 
+    background: #fff; 
+    border-radius: 20px; 
+    border: 1px solid #f1f5f9; 
+    overflow: hidden; 
+    transition: 0.4s; 
+    height: 100%; 
+    display: flex; 
+    flex-direction: column;
+}
+
+.hp-service-card:hover { 
+    transform: translateY(-10px); 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05); 
+}
+
+.card-img-fix { 
+    height: 240px; 
+    overflow: hidden; 
+}
+
+.card-img-fix img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+.card-body { 
+    padding: 30px; 
+    text-align: center; 
+}
+
+.card-link { 
+    color: var(--accent); 
+    font-weight: 700; 
+    text-decoration: none; 
+    border-bottom: 2px solid var(--accent); 
+}
 
 /* 4. ABOUT SECTION */
-.hp-about-split-dark { padding: 120px 0; background: var(--dark-section); color: #fff; }
-.split-flex { display: flex; align-items: center; gap: 60px; }
-.big-tag-dark { font-size: 6rem; font-weight: 900; color: rgba(255,255,255,0.03); }
-.stats-grid-dark { display: flex; gap: 40px; margin-top: 30px; }
-.stat h4 { font-size: 2.5rem; color: var(--accent); font-weight: 800; }
+
+.hp-about-split-dark { 
+    padding: 120px 0; 
+    background: var(--primary-dark); /* Variable use kiya */
+    color: var(--white); 
+}
+.split-flex { 
+    display: flex; 
+    align-items: center; 
+    gap: 60px; 
+}
+.big-tag-dark { 
+    font-size: 6rem; 
+    font-weight: 900; 
+    color: rgba(255,255,255,0.03); 
+}
+.stats-grid-dark { 
+    display: flex; 
+    gap: 40px; 
+    margin-top: 30px; 
+}
+.stat h4 { 
+    font-size: 2.5rem; 
+    color: var(--accent-blue); /* Updated variable */
+    font-weight: 800; 
+}
 
 /* 5. FAQ */
-.hp-faq { padding: 100px 0; }
-.faq-grid { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
-.faq-item { background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #e2e8f0; }
+
+.hp-faq { 
+    padding: 100px 0; 
+}
+.faq-grid { 
+    max-width: 800px; 
+    margin: 0 auto; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+.faq-item { 
+    background: var(--white); 
+    padding: 25px; 
+    border-radius: 15px; 
+    border: 1px solid #e2e8f0; 
+    transition: 0.3s; /* Smooth effect */
+}
+.faq-item:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
 
 /* 6. MOBILE FIXES */
 @media (max-width: 992px) {
-    .hp-hero-flex, .split-flex { flex-direction: column; text-align: center; }
-    .hp-image-stack { height: 350px; width: 100%; margin-top: 40px; }
-    .hp-services-grid { grid-template-columns: 1fr; }
-    .big-tag-dark { font-size: 4rem; }
-    .stats-grid-dark { justify-content: center; }
+    .hp-hero-flex, .split-flex { 
+        flex-direction: column; 
+        text-align: center; 
+    }
+    .hp-image-stack { 
+        height: 350px; 
+        width: 100%; 
+        margin-top: 40px; 
+    }
+    .hp-services-grid { 
+        grid-template-columns: 1fr; 
+    }
+    .big-tag-dark { 
+        font-size: 4rem; 
+    }
+    .stats-grid-dark { 
+        justify-content: center; 
+        flex-wrap: wrap; 
+    }
 }
