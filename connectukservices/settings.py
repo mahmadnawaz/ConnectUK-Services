@@ -1,10 +1,3 @@
-"""
-Django settings for connectukservices project.
-Updated for Oracle 23ai Free - ConnectUK Services Project
-Updated for Oracle Cloud Autonomous Database (PaaS) - Thin Mode Fix
-Final Version: June 1, 2026
-"""
-
 import os
 from pathlib import Path
 
@@ -39,7 +32,8 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost:8000',
-    'https://distant-granola-chrome.ngrok-free.dev',
+    # 'https://distant-granola-chrome.ngrok-free.dev',
+    'https://connectukservices.onrender.com',
 ]
 
 
@@ -54,11 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # Cloudinary
     'cloudinary_storage',
     'cloudinary',
     
-    # Hamari Apps
     'core',
     'accounts',
     'services',
@@ -97,11 +89,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'connectukservices.wsgi.application'
 
-
-# ==============================================================================
 # 4. DATABASE: ORACLE CLOUD AUTONOMOUS DATABASE (PaaS - Thin Mode)
-# ==============================================================================
-# Sahi Service Name aur SSL validation bypass ke sath optimized cloud connection
+
 CLOUD_DSN = (
     "(DESCRIPTION="
     "(RETRY_COUNT=20)(RETRY_DELAY=3)"
@@ -110,7 +99,6 @@ CLOUD_DSN = (
     "(SECURITY=(ssl_server_dn_match=no)))"
 )
 
-# settings.py mein ye change karein
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
@@ -118,14 +106,12 @@ DATABASES = {
         'USER': 'ADMIN',
         'PASSWORD': 'ConnectUK_216',
         'CONN_MAX_AGE': 600,
-        'OPTIONS': {}  # <--- Bilkul khali rakhein
+        'OPTIONS': {}  
     }
 }
 
-
-# ==============================================================================
 # 5. PASSWORD VALIDATION & INTERNATIONALIZATION
-# ==============================================================================
+
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},

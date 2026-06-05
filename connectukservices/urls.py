@@ -12,6 +12,5 @@ urlpatterns = [
     path('services/', include('services.urls')),
 ]
 
-# Ye line lazmi hai taake uploaded images (ID Proofs/Invoices) browser mein khul saken
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
