@@ -36,7 +36,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://connectukservices.onrender.com',
 ]
 
-
 # ==============================================================================
 # 3. APPLICATION & MIDDLEWARE DEFINITION
 # ==============================================================================
@@ -151,12 +150,15 @@ DEFAULT_FROM_EMAIL = 'ConnectUK Services <ahn63400@gmail.com>'
 # ==============================================================================
 # 8. CLOUDINARY CONFIGURATION (Media Files)
 # ==============================================================================
-import cloudinary
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
