@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from services.models import ServiceRequest 
-from core.models import ContactMessage  # Naya model import kiya
+from core.models import ContactMessage  
 from django.contrib import messages
 
 @login_required(login_url='login')
@@ -31,7 +31,7 @@ def complaint_view(request):
             name=full_name,
             email=email,
             mobile=mobile,
-            subject=f"[COMPLAINT] {subject}", # Prefix taake admin panel mein alag dikhe
+            subject=f"[COMPLAINT] {subject}", 
             message=message_body
         )
 

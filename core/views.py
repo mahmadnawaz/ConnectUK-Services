@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from services.models import ContactMessage # Database mein save karne ke liye model import kiya
+from services.models import ContactMessage 
 
 def home(request):
     return render(request, 'core/home.html')
