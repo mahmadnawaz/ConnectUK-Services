@@ -2,7 +2,9 @@
 
 :root {
     --primary: #0f172a;
+    --primary-dark: #0b0f19;
     --accent: #38bdf8;
+    --accent-blue: #3b82f6;
     --accent-hover: #0ea5e9;
     --white: #ffffff;
     --text-muted: #64748b;
