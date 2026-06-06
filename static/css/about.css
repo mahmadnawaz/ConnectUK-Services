@@ -30,7 +30,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover; /* Image stretch nahi hogi */
     z-index: 1;
 }
 
@@ -40,7 +40,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.35); 
+    background: rgba(255, 255, 255, 0.35); /* Image ke upar halka shade */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +51,7 @@ body {
     text-align: center;
     max-width: 800px;
     padding: 40px;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.6); /* Glass effect */
     backdrop-filter: blur(8px);
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
@@ -146,18 +146,9 @@ body {
 
 /* --- 6. MOBILE VIEW --- */
 @media (max-width: 768px) {
-    .hero-container { 
-        height: 45vh; 
-    }
-
-    .hero-text-box { 
-        width: 90%; 
-        padding: 25px; 
-    }
-    .hero-text-box h1 { 
-        font-size: 1.8rem; }
-    .service-grid { 
-        grid-template-columns: 1fr; }
-    .about-section, .services-section { 
-        padding: 50px 0; }
+    .hero-container { height: 45vh; }
+    .hero-text-box { width: 90%; padding: 25px; }
+    .hero-text-box h1 { font-size: 1.8rem; }
+    .service-grid { grid-template-columns: 1fr; }
+    .about-section, .services-section { padding: 50px 0; }
 }
